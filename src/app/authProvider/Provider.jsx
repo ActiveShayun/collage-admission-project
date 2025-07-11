@@ -1,5 +1,5 @@
 'use client'
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, updateProfile, } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../lib/firebase/firebase.init';
 export const AuthContext = createContext(null)
@@ -22,6 +22,11 @@ const Provider = ({ children }) => {
         return signInWithPopup(auth, googleAProvider)
     }
 
+    const handleUpDatedProfile = (updatedProfile) => {
+        setLoading(false)
+        return updateProfile(auth.currentUser, updatedProfile)
+    }
+
     useEffect(() => {
         const unSubsCribe = onAuthStateChanged(auth, (currentUser) => {
             setLoading(false)
@@ -36,7 +41,9 @@ const Provider = ({ children }) => {
     const authUsers = {
         signUpUser,
         handleSignInUser,
-        handleGoogleLogin
+        handleGoogleLogin,
+        handleUpDatedProfile,
+        user
     }
     return (
         <AuthContext.Provider value={authUsers}>

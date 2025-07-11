@@ -1,16 +1,27 @@
 'use client';
 
+import UseAuth from '@/app/authProvider/AuthContext';
+import { Avatar } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
 
 const Navbar = () => {
+    const { user } = UseAuth()
 
     const deskTopMenu = <>
         <Link href={'/'}>Home</Link>
-        <Link href={'/register'}>Resister</Link>
-        <Link href={'/login'}>login</Link>
-        <Link href={'/pages/allBlogPage'}>All Blog</Link>
-        <Link href={'/dashboard'}>Dashboard</Link>
+        <Link href={'pages/CollageForm'}>Colleges</Link>
+        <Link href={'/dashboard'}>Admission</Link>
+        {
+            user && (
+                <Link href={'pages/collageForm'}>Add College</Link>
+            )
+        }
+        {
+            user && (
+                <Link href={'/myCollage'}>My College</Link>
+            )
+        }
     </>
 
     // const isUser = <>
@@ -48,8 +59,23 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                
-                <a className="btn">Button</a>
+
+                {
+                    user ?
+                        <div className='flex items-center gap-4'>
+                            <Avatar
+                                title={user?.displayName}
+                                alt="user photo"
+                                src={user?.photoURL} />
+                            <button className='btn'>Logout</button>
+                        </div>
+                        :
+                        <div>
+
+                            <Link href={'/login'}>login</Link>
+                        </div>
+
+                }
             </div>
         </div>
     );

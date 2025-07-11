@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
@@ -26,8 +27,14 @@ const Login = () => {
         handleSignInUser(email, password)
             .then(result => {
                 console.log(result);
+                toast.success('Login successful')
+                reset()
             })
-            .catch(err => console.log('error', err))
+            .catch(err => {
+                console.log(err);
+                toast.error(err.massage)
+            })
+
     }
 
     return (
