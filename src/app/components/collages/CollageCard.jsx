@@ -5,7 +5,7 @@ import React from 'react';
 const CollageCard = ({ p, w, collage }) => {
     console.log(collage);
     return (
-        <div className={`${p ? 'mb-4 px-4' : ''} group `}>
+        <div className={`${p ? 'mb-4 px-4' : ''} group bg-gray-400 relative p-3`}>
             <div className='relative overflow-hidden'>
                 <img className={`${w ? 'h-75' : ''} w-full h-52 object-cover
                  group-hover:scale-110 transition-transform ease-in-out duration-500 transform`}
@@ -18,15 +18,25 @@ const CollageCard = ({ p, w, collage }) => {
                 <div className='absolute top-0 left-0 bg-black w-full h-full z-20 opacity-30'></div>
             </div>
             {/* text content */}
-            <div>
-                <div className='text-xs font-medium flex items-center gap-2 mt-4 mb-2'>
-                    <p className='text-[#EC0E0E]'>{collage.author_Name}</p>
-                    <p>{collage.admission_StartDate}</p>
+            <div className=''>
+                <div className='text-lg font-medium mt-4 mb-2'>
+                    <p className='text-[#EC0E0E]'>
+                        {collage.author_Name}
+                    </p>
+                    <p>
+                        Admission start from -{collage.admission_StartDate}
+                    </p>
+                    <p>
+                        Admission End -{collage.admission_EndDate}
+                    </p>
+                    <h2 className='text-2xl mb-2'>{collage.collage_Name}</h2>
                 </div>
-                <Link href={`/`}>
-                    <h2>{collage.collage_Name}</h2>
-                </Link>
             </div>
+            <Link className='absolute bottom-0 right-0' 
+            href={`pages/collageDetails/${collage._id}`}>
+                <button className='cursor-pointer bg-white px-3 py-1 font-semibold
+                  '>Details</button>
+            </Link>
         </div>
     );
 };

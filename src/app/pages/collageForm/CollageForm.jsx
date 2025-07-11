@@ -28,6 +28,8 @@ const CollageForm = () => {
     const { user } = UseAuth()
     const [loading, setLoading] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [sports, setSports] = useState("");
+
     const useAxios = axiosPublic()
     const categories = [
         "Engineering",
@@ -39,8 +41,28 @@ const CollageForm = () => {
         "Law",
         "Education",
         "Polytechnic",
-        "Pharmacy"
+        "Pharmacy",
+        "Sports"
     ];
+
+    const sportsTypes = [
+        "Football",
+        "Cricket",
+        "Basketball",
+        "Tennis",
+        "Badminton",
+        "Hockey",
+        "Volleyball",
+        "Table Tennis",
+        "Athletics",
+        "Swimming",
+        "Boxing",
+        "Gymnastics",
+        "Cycling",
+        "Wrestling",
+        "Rugby"
+    ];
+
 
 
     const {
@@ -72,7 +94,7 @@ const CollageForm = () => {
             admission_EndDate: data.endDate,
             seats_Available: data.seatsAvailable,
             courses_Category: data.coursesCategory,
-            collage_description: data.collageDescription,
+            research_history: data.researchHistory,
             like: 0,
             disLike: 0
         }
@@ -80,7 +102,7 @@ const CollageForm = () => {
 
             const res = await useAxios.post('/api/addCollage', collage)
             console.log('add blog', res);
-            if (res.insertedId) {
+            if (res.data.insertedId) {
                 toast.success('Blog Added Successful')
                 setLoading(false)
                 reset()
@@ -229,7 +251,7 @@ const CollageForm = () => {
                                 </div>
                             </div>
                             {/* row 4 */}
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-3">
                                 <div>
                                     <label className="label block mb-2 text-lg">Provided Courses</label>
                                     <select className="select w-full"
@@ -247,13 +269,30 @@ const CollageForm = () => {
                                         }
                                     </select>
                                 </div>
+                                <div>
+                                    <label className="label block mb-2 text-lg">Sports</label>
+                                    <select className="select w-full"
+                                        {...register('spotsCategory', { required: true })}
+                                        defaultValue={sports}
+                                        onChange={(e) => setSports(e.target.value)}
+                                    >
+                                        <option value="">Select Category</option>
+                                        {
+                                            sportsTypes.map(cat => {
+                                                return (
+                                                    <option key={cat} value={cat}>{cat}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </div>
                                 {/*Collage Description*/}
                                 <div>
-                                    <label className="label mb-2 text-lg">Collage Description</label>
+                                    <label className="label mb-2 text-lg">Research History</label>
                                     <input type="text"
-                                        {...register('collageDescription', { required: true })}
+                                        {...register('researchHistory', { required: true })}
                                         className="input w-full"
-                                        placeholder="Enter blog description" required/>
+                                        placeholder="Enter blog description" required />
                                 </div>
                             </div>
 
