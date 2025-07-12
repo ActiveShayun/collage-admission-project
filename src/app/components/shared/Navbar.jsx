@@ -4,40 +4,36 @@ import UseAuth from '@/app/authProvider/AuthContext';
 import { Avatar } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
-    const { user } = UseAuth()
+    const { user, handleSignOut } = UseAuth()
+
+    const logoutUser = () => {
+        handleSignOut()
+            .then(() => {
+                toast.success('Logout Successful')
+            })
+    }
 
     const deskTopMenu = <>
         <Link href={'/'}>Home</Link>
         <Link href={'/pages/allCollagePage'}>Colleges</Link>
-        <Link href={'/dashboard'}>Admission</Link>
+        <Link href={'/pages/admissionPage/'}>Admission</Link>
+
         {
-            user && (
-                <Link href={'pages/collageForm'}>Add College</Link>
-            )
+            user ? (
+                <Link href={'/pages/collageForm'}>Add College</Link>
+            ) : <Link href={'/login'}>Add College</Link>
         }
         {
-            user && (
-                <Link href={'/myCollage'}>My College</Link>
-            )
+            user ? (
+                <Link href={'/pages/myCollage'}>My College</Link>
+            ) : <Link href={'/login'}>My College</Link>
         }
     </>
 
-    // const isUser = <>
-    //     {
-    //         status === 'authenticated' ?
-    //             <>
-    //                 <Link href={'/login'} className='btn mr-3'
-    //                     onClick={() => signOut()}>Log Out</Link>
-    //             </> :
-    //             <>
-    //                 <Link className=' mr-3'
-    //                     href={'/register'}>Register</Link>
-    //                 <Link href={'/login'}>Login</Link>
-    //             </>
-    //     }
-    // </>
+
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">
@@ -63,16 +59,20 @@ const Navbar = () => {
                 {
                     user ?
                         <div className='flex items-center gap-4'>
-                            <Avatar
-                                title={user?.displayName}
-                                alt="user photo"
-                                src={user?.photoURL} />
-                            <button className='btn'>Logout</button>
+                            <Link href={'/pages/userProfilePage'}>
+                                <Avatar
+                                    title={user?.displayName}
+                                    alt="user photo"
+                                    src={user?.photoURL} />
+                            </Link>
+                            <button onClick={logoutUser}
+                                className='btn'>Logout</button>
                         </div>
                         :
                         <div>
 
-                            <Link href={'/login'}>login</Link>
+                            <Link className='border py-1 px-4 font-medium rounded-md'
+                                href={'/login'}>login</Link>
                         </div>
 
                 }

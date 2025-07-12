@@ -7,10 +7,10 @@ import toast from "react-hot-toast";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import { upLoadImgBBPhoto } from "@/app/utility/utility";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import UseAuth from "@/app/authProvider/AuthContext";
 import axiosPublic from "@/app/components/shared/axiosHooks/axiosPublic";
+import { useRouter } from "next/navigation";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -28,7 +28,7 @@ const CollageForm = () => {
     const { user } = UseAuth()
     const [loading, setLoading] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [sports, setSports] = useState("");
+    const router = useRouter()
 
     const useAxios = axiosPublic()
     const categories = [
@@ -51,16 +51,11 @@ const CollageForm = () => {
         "Basketball",
         "Tennis",
         "Badminton",
-        "Hockey",
         "Volleyball",
-        "Table Tennis",
-        "Athletics",
+        "TableTennis",
         "Swimming",
-        "Boxing",
         "Gymnastics",
         "Cycling",
-        "Wrestling",
-        "Rugby"
     ];
 
 
@@ -69,43 +64,48 @@ const CollageForm = () => {
         register,
         formState: { error },
         handleSubmit,
-        reset
+        reset,
+        watch
     } = useForm()
     const onSubmit = async (data) => {
-        toast.success('Blog Adding...')
+        toast.success('Collage Adding...')
         setLoading(true)
         console.log('data', data)
         // const tagsArray = data.tags.split(',').map(tag => tag.trim())
         // console.log(tagsArray);
         const image = await upLoadImgBBPhoto(data.collageBanner[0])
+        const img2 = await upLoadImgBBPhoto(data.graduation_Group_Photo[0]);
         console.log(image);
+
+        const selectedSports = watch('sports', [])
+        console.log(selectedSports);
 
         const collage = {
             collage_Banner: image,
+            graduation_Group_Photo: img2,
             author_Email: data.authorEmail,
             author_Name: data.authorName,
             collage_Name: data.collageName,
             collage_Address: data.collageAddress,
             collage_Category: data.collageCategory,
             country: data.country,
-            collage_Code: data.collageCode,
-            collageCity: data.collageCity,
             admission_StartDate: data.startDate,
             admission_EndDate: data.endDate,
             seats_Available: data.seatsAvailable,
             courses_Category: data.coursesCategory,
             research_history: data.researchHistory,
+            spotsCategory: data.spotsCategory,
             like: 0,
             disLike: 0
         }
         try {
-
             const res = await useAxios.post('/api/addCollage', collage)
             console.log('add blog', res);
             if (res.data.insertedId) {
                 toast.success('Blog Added Successful')
                 setLoading(false)
                 reset()
+                router.push('/')
             }
         } catch (error) {
             console.log(error);
@@ -205,18 +205,19 @@ const CollageForm = () => {
                                         placeholder="Enter country" />
                                 </div>
                                 <div>
-                                    <label className="label mb-2 text-lg">Collage Code</label>
-                                    <input type="text"
-                                        {...register('collageCode', { required: true })}
+                                    <label className="label mb-2 text-lg">Graduation Group Photo</label>
+                                    <input type="file"
+                                        {...register('graduation_Group_Photo', { required: true })}
                                         className="input w-full"
-                                        placeholder="Enter collage code" />
+                                        placeholder="Enter country" />
                                 </div>
+                                {/*Seats Available*/}
                                 <div>
-                                    <label className="label mb-2 text-lg">Collage City</label>
+                                    <label className="label mb-2 text-lg">Seats Available</label>
                                     <input type="text"
-                                        {...register('collageCity', { required: true })}
+                                        {...register('seatsAvailable', { required: true })}
                                         className="input w-full"
-                                        placeholder="Enter collage city" />
+                                        placeholder="Enter seats" />
                                 </div>
                             </div>
 
@@ -241,17 +242,18 @@ const CollageForm = () => {
                                             placeholder="Enter " />
                                     </div>
                                 </div>
-                                {/*Seats Available*/}
+                                {/*Collage Description*/}
                                 <div>
-                                    <label className="label mb-2 text-lg">Seats Available</label>
+                                    <label className="label mb-2 text-lg">Research History</label>
                                     <input type="text"
-                                        {...register('seatsAvailable', { required: true })}
+                                        {...register('researchHistory', { required: true })}
                                         className="input w-full"
-                                        placeholder="Enter seats" />
+                                        placeholder="Enter blog description" required />
                                 </div>
+
                             </div>
                             {/* row 4 */}
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-3">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
                                 <div>
                                     <label className="label block mb-2 text-lg">Provided Courses</label>
                                     <select className="select w-full"
@@ -270,30 +272,27 @@ const CollageForm = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="label block mb-2 text-lg">Sports</label>
-                                    <select className="select w-full"
-                                        {...register('spotsCategory', { required: true })}
-                                        defaultValue={sports}
-                                        onChange={(e) => setSports(e.target.value)}
-                                    >
-                                        <option value="">Select Category</option>
+                                    <label className="label mb-2 text-lg">Sports</label>
+                                    <div className="lg:flex gap-0.5">
                                         {
-                                            sportsTypes.map(cat => {
+                                            sportsTypes.map((sport, index) => {
                                                 return (
-                                                    <option key={cat} value={cat}>{cat}</option>
+                                                    <div key={index} >
+
+                                                        <input type="checkbox"
+                                                            value={sport}
+                                                            {...register('spotsCategory', { required: true })}
+                                                            className="checkbox"
+                                                        />
+                                                        {sport}
+                                                    </div>
                                                 )
                                             })
                                         }
-                                    </select>
+                                    </div>
+
                                 </div>
-                                {/*Collage Description*/}
-                                <div>
-                                    <label className="label mb-2 text-lg">Research History</label>
-                                    <input type="text"
-                                        {...register('researchHistory', { required: true })}
-                                        className="input w-full"
-                                        placeholder="Enter blog description" required />
-                                </div>
+
                             </div>
 
                             {

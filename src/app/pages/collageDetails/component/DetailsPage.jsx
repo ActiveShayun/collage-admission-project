@@ -6,6 +6,7 @@ import { FcDislike, FcLike } from "react-icons/fc";
 import { FaXTwitter } from "react-icons/fa6";
 import Link from 'next/link';
 import { ArrowRightAlt } from '@mui/icons-material';
+import AllReview from '@/app/components/allReview/AllReview';
 
 const DetailsPage = ({ id }) => {
     console.log(id.id);
@@ -94,6 +95,7 @@ const DetailsPage = ({ id }) => {
                     <p className='mt-8 text-gray-500'>{collage?.research_history}</p>
                 </div>
             </div>
+            <AllReview collage={collage} />
         </div>
     );
 };

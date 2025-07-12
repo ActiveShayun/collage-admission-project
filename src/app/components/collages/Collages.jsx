@@ -8,19 +8,19 @@ const Collages = () => {
     console.log(allCollage);
     return (
         <div>
-            <div className='lg:w-3/5 mx-auto'>
-                <h2 className='text-center text-2xl font-semibold mb-4'>All Collage Here</h2>
+            <div className='lg:w-3/5 mx-auto mb-8'>
+                <h2 className='text-center lg:text-4xl text-2xl font-semibold mb-4'>All Collage Here</h2>
                 <input
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search colleges..."
-                    className="border px-3 py-2 mx-auto block rounded mb-4 w-full max-w-md"
+                    className="border px-3 py-2 mx-auto block rounded  w-full max-w-md"
                 />
             </div>
             <div className='grid grid-cols-1 justify-center lg:grid-cols-4 gap-4'>
-                { isLoading ? <p className='text-center'>Loading</p> :
-                    allCollage.map(collage => {
+                {isLoading ? <p className='text-center'>Loading</p> :
+                    allCollage.slice(0, 4).map(collage => {
                         return <CollageCard key={collage._id} collage={collage} />
                     })
                 }

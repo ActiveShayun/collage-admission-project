@@ -1,9 +1,11 @@
 'use client'
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, updateProfile, } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile, } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../lib/firebase/firebase.init';
+import axiosPublic from '../components/shared/axiosHooks/axiosPublic';
 export const AuthContext = createContext(null)
 const Provider = ({ children }) => {
+    const useAxios = axiosPublic()
     const [user, setUser] = useState(null)
     const [location, setLoading] = useState(true)
 
@@ -28,14 +30,37 @@ const Provider = ({ children }) => {
     }
 
     useEffect(() => {
-        const unSubsCribe = onAuthStateChanged(auth, (currentUser) => {
+        const unSubsCribe = onAuthStateChanged(auth, async (currentUser) => {
             setLoading(false)
             setUser(currentUser)
+            if (currentUser?.email) {
+                const user = {
+                    name: currentUser.displayName,
+                    photo: currentUser.photoURL,
+                    email: currentUser.email
+                }
+                try {
+                    const res = await useAxios.post('/api/addUser', user)
+                    console.log('user post', res);
+                } catch (error) {
+                    if (error?.response?.status === 409) {
+                      
+                    }
+                    else {
+                        console.log('user save failed to database');
+                    }
+                }
+
+            }
         })
         return () => {
             unSubsCribe()
         }
     }, [])
+
+    const handleSignOut = () => {
+        return signOut(auth)
+    }
     console.log('Provider', user);
 
     const authUsers = {
@@ -43,7 +68,8 @@ const Provider = ({ children }) => {
         handleSignInUser,
         handleGoogleLogin,
         handleUpDatedProfile,
-        user
+        user,
+        handleSignOut
     }
     return (
         <AuthContext.Provider value={authUsers}>

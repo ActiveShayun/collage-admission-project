@@ -3,7 +3,10 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 export const collectionNameObj = {
-    "collageCollection": "collages"
+    "collageCollection": "collages",
+    "submissionCollection": "submissions",
+    "commentCollection": "comments",
+    "usersCollection": "users"
 }
 
 export function dbConnect(collection) {
