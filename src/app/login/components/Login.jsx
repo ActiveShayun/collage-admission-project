@@ -38,7 +38,7 @@ const Login = () => {
     }
 
     return (
-        <div className='mt-8'>
+        <div className='my-8'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='max-w-[500px] mx-auto border rounded-lg p-4'>
                     <h2 className='text-2xl text-center'>SingIn Please</h2>

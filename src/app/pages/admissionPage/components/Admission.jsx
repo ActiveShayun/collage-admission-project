@@ -2,6 +2,7 @@
 import AllCollage from '@/app/components/allCollageApi/AllCollage';
 import React, { useState } from 'react';
 import AdmissionModal from './AdmissionModal';
+import Link from 'next/link';
 
 const Admission = () => {
     const { allCollage, isLoading } = AllCollage()
@@ -18,7 +19,7 @@ const Admission = () => {
         setOpen(false)
     };
     return (
-        <div>
+        <div className='mb-8'>
             <div className='my-8'>
                 <h2 className='text-2xl font-bold text-center'>All Collage Admission Here</h2>
             </div>
@@ -32,7 +33,9 @@ const Admission = () => {
                                     className='rounded-md'
                                     src={collage.collage_Banner}
                                     alt="" />
-                                <h2 className='text-xl mt-4'>{collage.collage_Name}</h2>
+                                <h2 className='text-xl mt-4 mb-8'>{collage.collage_Name}</h2>
+                                <Link href={`/pages/collageDetails/${collage._id}`}
+                                 className='absolute left-0 bottom-0 border p-1 rounded-tr'>Collage Details</Link>
                                 <button onClick={() => handleOpen(collage)}
                                     className='absolute bottom-0 right-0
                                  bg-red-700 p-1 rounded-tl text-white cursor-pointer'>

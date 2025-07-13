@@ -11,7 +11,7 @@ export const collectionNameObj = {
 
 export function dbConnect(collection) {
     // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-    const uri = process.env.MONGODB_URI;
+    const uri = process.env.NEXT_PUBLIC_.MONGODB_URI;
     const client = new MongoClient(uri, {
         serverApi: {
             version: ServerApiVersion.v1,

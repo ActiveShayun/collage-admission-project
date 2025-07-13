@@ -48,7 +48,8 @@ const AdmissionModal = ({ selectedCollage, open, handleClose }) => {
                 date_of_birth: data.date_of_birth,
                 photo: img,
                 collageName: selectedCollage.collage_Name,
-                collageBanner: selectedCollage.collage_Banner
+                collageBanner: selectedCollage.collage_Banner,
+                postID: selectedCollage._id
             }
             console.log(submissionForm);
             const res = await useAxios.post('/api/submissionForm', submissionForm)

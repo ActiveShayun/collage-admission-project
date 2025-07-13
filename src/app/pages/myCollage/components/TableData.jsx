@@ -6,7 +6,7 @@ import TableRow from './TableRow';
 
 const TableData = ({ myCollage, isLoading }) => {
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto my-12">
             <h2 className='text-center text-2xl font-bold mb-4'>Your Submission List</h2>
             <table className="table">
                 {/* head */}
@@ -17,6 +17,7 @@ const TableData = ({ myCollage, isLoading }) => {
                         <th>Photo</th>
                         <th>Collage Name</th>
                         <th>Collage Banner</th>
+                        <th>Collage Details</th>
                         <th>Date of birth</th>
                     </tr>
                 </thead>

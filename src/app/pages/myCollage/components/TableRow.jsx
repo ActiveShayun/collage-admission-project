@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 import React from 'react';
 
 const TableRow = ({ idx, collage }) => {
@@ -25,8 +26,8 @@ const TableRow = ({ idx, collage }) => {
                             </div>
                         </div>
                         <div>
-                            <div className="font-bold">Marjy Ferencz</div>
-                            <div className="text-sm opacity-50">Russia</div>
+                            <div className="font-bold">Subject</div>
+                            <div className="text-sm opacity-50">{collage.subject}</div>
                         </div>
                     </div>
                 </td>
@@ -41,6 +42,12 @@ const TableRow = ({ idx, collage }) => {
                                 alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
+                </th>
+                <th>
+                    <Link href={`/pages/collageDetails/${collage.postID}`}>
+                        Details
+                    </Link>
+
                 </th>
                 <th>
                     {collage.date_of_birth}

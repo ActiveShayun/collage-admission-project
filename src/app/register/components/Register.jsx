@@ -5,11 +5,12 @@ import { upLoadImgBBPhoto } from '@/app/utility/utility';
 
 import { Button } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const Register = () => {
-
+    const router = useRouter()
     const { signUpUser, handleUpDatedProfile } = UseAuth()
     console.log("API KEY:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
 
@@ -33,6 +34,7 @@ const Register = () => {
                 toast.success(' signUp successful')
                 reset()
                 handleUpDatedProfile({ displayName: name, photoURL: img })
+                router.push('/')
             })
             .catch(err => {
                 toast.error(err.message)
@@ -41,7 +43,7 @@ const Register = () => {
     }
 
     return (
-        <div className='mt-8'>
+        <div className='my-8'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='max-w-[500px] mx-auto border rounded-lg p-4'>
                     <h2 className='text-2xl text-center'>Sing Up Please</h2>
