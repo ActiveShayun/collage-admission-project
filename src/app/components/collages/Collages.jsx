@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import AllCollage from '../allCollageApi/AllCollage';
-import CollageCard from './CollageCard';
+import Card from '../shared/card/Card';
 
 const Collages = () => {
     const { allCollage, isLoading, setSearch, search } = AllCollage()
@@ -21,7 +21,19 @@ const Collages = () => {
             <div className='grid grid-cols-1 justify-center lg:grid-cols-4 gap-4'>
                 {isLoading ? <p className='text-center'>Loading</p> :
                     allCollage.slice(0, 4).map(collage => {
-                        return <CollageCard key={collage._id} collage={collage} />
+                        return (
+                            <Card
+                                key={collage._id}
+                                _id={collage._id}
+                                collage_Banner={collage.collage_Banner}
+                                collage_Name={collage.collage_Name}
+                                admission_StartDate={collage.admission_StartDate}
+                                admission_EndDate={collage.admission_EndDate}
+                                author_Name={collage.author_Name}
+                                collageCity={collage.collageCity}
+                            />
+                        )
+
                     })
                 }
             </div>

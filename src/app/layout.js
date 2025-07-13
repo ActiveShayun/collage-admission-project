@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={` antialiased max-w-7xl mx-auto`}
+        className={` antialiased max-w-7xl mx-auto p-4`}
       >
         <Provider>
           <ProviderQuery>

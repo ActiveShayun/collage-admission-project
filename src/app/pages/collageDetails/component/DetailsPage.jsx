@@ -85,7 +85,7 @@ const DetailsPage = ({ id }) => {
                         <button
                             className='flex items-center gap-2 cursor-pointer text-red-700'>
                             <ArrowRightAlt />
-                            <Link href={'/pages/allCollagePage/'}>
+                            <Link href={'/pages/admissionPage'}>
                                 <span className='text-black font-medium italic'>
                                     Admission Process
                                 </span>

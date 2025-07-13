@@ -9,6 +9,7 @@ const Collages = () => {
     const { allCollage, isLoading } = AllCollage()
     return (
         <div className='mt-8'>
+            <h2 className='lg:text-4xl text-3xl font-semibold mb-8 text-center'>All Collage Find Here</h2>
             <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
                 {
                     allCollage?.map(collage => {

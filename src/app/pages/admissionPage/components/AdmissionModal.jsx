@@ -16,7 +16,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
+    // width: 500,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -45,6 +45,7 @@ const AdmissionModal = ({ selectedCollage, open, handleClose }) => {
                 subject: data.subject,
                 email: data?.email,
                 phone: data.phone,
+                address: data.address,
                 date_of_birth: data.date_of_birth,
                 photo: img,
                 collageName: selectedCollage.collage_Name,
@@ -57,7 +58,7 @@ const AdmissionModal = ({ selectedCollage, open, handleClose }) => {
             if (res.data.insertedId) {
                 toast.success('Your form is submitted')
                 reset()
-                router.push('/')
+                router.push('/pages/myCollage')
             }
         } catch (error) {
             console.log(error);
@@ -74,25 +75,25 @@ const AdmissionModal = ({ selectedCollage, open, handleClose }) => {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={style} className='w-full max-w-[90vw] sm:max-w-[500px] lg:max-w-[700px] max-h-screen overflow-y-auto p-4 bg-white rounded shadow-lg'>
                     <Typography id="keep-mounted-modal-title">
                         <h2 className='text-center text-2xl mb-4'>Submission Form</h2>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             {/* 1 row */}
                             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-2'>
                                 <div>
-                                    <label htmlFor="" className='block'>Name</label>
+                                    <label htmlFor="" className='block mb-1'>Name</label>
                                     <input
                                         defaultValue={user?.displayName}
-                                        className='input'
+                                        className='input w-full'
                                         {...register('name', { required: true })}
                                         type="text"
                                         placeholder='Enter your name' />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className='block'>Subject</label>
+                                    <label htmlFor="" className='block mb-1'>Subject</label>
                                     <input
-                                        className='input'
+                                        className='input w-full'
                                         {...register('subject', { required: true })}
                                         type="text"
                                         placeholder='Enter your subject' />
@@ -101,18 +102,18 @@ const AdmissionModal = ({ selectedCollage, open, handleClose }) => {
                             {/* second row */}
                             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-2'>
                                 <div>
-                                    <label htmlFor="" className='block'>Email</label>
+                                    <label htmlFor="" className='block mb-1'>Email</label>
                                     <input
-                                        className='input'
+                                        className='input w-full'
                                         defaultValue={user?.email}
                                         {...register('email', { required: true })}
                                         type="email"
                                         placeholder='Enter your email' />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className='block'>Phone</label>
+                                    <label htmlFor="" className='block mb-1'>Phone</label>
                                     <input
-                                        className='input'
+                                        className='input w-full'
                                         {...register('phone', { required: true })}
                                         type="phone"
                                         placeholder='Enter your phone' />
@@ -121,21 +122,29 @@ const AdmissionModal = ({ selectedCollage, open, handleClose }) => {
                             {/* row 3 */}
                             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-2'>
                                 <div>
-                                    <label htmlFor="" className='block'>Date of birth</label>
+                                    <label htmlFor="" className='block mb-1'>Date of birth</label>
                                     <input
-                                        className='input'
+                                        className='input w-full'
                                         {...register('date_of_birth', { required: true })}
                                         type="date"
                                         placeholder='Enter your phone' />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className='block'>Photo</label>
+                                    <label htmlFor="" className='block mb-1'>Photo</label>
                                     <input
-                                        className='input'
+                                        className='input w-full'
                                         {...register('photo', { required: true })}
                                         type="file"
                                         placeholder='Enter your phone' />
                                 </div>
+                            </div>
+                            <div>
+                                <label htmlFor="" className='block mb-1'>Address</label>
+                                <input
+                                    className='input w-full'
+                                    {...register('address', { required: true })}
+                                    type="text"
+                                    placeholder='Enter your address' />
                             </div>
                             <div className='mt-4'>
                                 <Button

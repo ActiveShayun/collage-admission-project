@@ -4,7 +4,7 @@ import React from 'react';
 
 const Card = ({ collage_Banner, collage_Name, author_Name, admission_EndDate, admission_StartDate, _id ,collageCity }) => {
     return (
-        <div className="group bg-gray-400 relative p-3 mb-4">
+        <div className="group relative border border-gray-500 p-3 mb-4">
             <div className='relative overflow-hidden'>
                 <img
                     className="w-full h-52 object-cover group-hover:scale-110 transition-transform ease-in-out duration-500 transform"
@@ -20,16 +20,16 @@ const Card = ({ collage_Banner, collage_Name, author_Name, admission_EndDate, ad
             </div>
 
             <div className=''>
-                <div className='text-lg font-medium mt-4 mb-2'>
+                <div className='text-sm mt-4 space-y-2'>
                     <p className='text-[#EC0E0E]'>{author_Name}</p>
-                    <p>Admission starts from: {admission_StartDate}</p>
-                    <p>Admission ends: {admission_EndDate}</p>
+                    <p>Admission starts from : {admission_StartDate}</p>
+                    <p>Admission ends : {admission_EndDate}</p>
                     <h2 className='text-2xl mb-2'>{collage_Name}</h2>
                 </div>
             </div>
 
             <Link href={`/pages/collageDetails/${_id}`} className='absolute bottom-0 right-0'>
-                <button className='cursor-pointer bg-white px-3 py-1 font-semibold'>Details</button>
+                <button className='cursor-pointer bg-red-700 text-white px-3 py-1 font-semibold'>Details</button>
             </Link>
         </div>
     );
