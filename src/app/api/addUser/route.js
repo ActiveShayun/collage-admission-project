@@ -1,3 +1,4 @@
+import { corsHeaders } from "@/app/lib/corsHeader/corsHeader";
 import { collectionNameObj, dbConnect } from "@/app/lib/dbConect/dbConect";
 import { NextResponse } from "next/server";
 
@@ -13,5 +14,16 @@ export async function POST(req, { params }) {
     }
     const result = await usersCollection.insertOne(body)
     console.log('users', result);
-    return NextResponse.json(result)
+    return NextResponse.json(result,{
+        status:200,
+        headers:corsHeaders
+    })
+}
+
+export async function OPTIONS() {
+    return NextResponse.json({},
+        {
+            status: 200,
+            headers: corsHeaders
+        })
 }
